@@ -1,0 +1,61 @@
+.BgImage {
+  /* height: 70vh; */
+  width: 100vw;
+  padding-top: 15vh;
+  padding-bottom: 15vh;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  object-fit: cover;
+  background-size: cover;
+  border-bottom-left-radius: 27px;
+  border-bottom-right-radius: 27px;
+  background: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7)),
+    url("../../../assets/img/landing-background.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  text-align: center;
+  color: #c5c6c7;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-blend-mode: darken;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Button {
+  border: 1px solid #66fcf1;
+  width: 200px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #66fcf1;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: large;
+  letter-spacing: 0.3em;
+  padding-left: 00.3em;
+}
+
+.Button:hover {
+  background-color: #66fcf1;
+  color: #1f2833;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 1024px) {
+  .BgImage {
+    /* height: 90vh; */
+  }
+}
