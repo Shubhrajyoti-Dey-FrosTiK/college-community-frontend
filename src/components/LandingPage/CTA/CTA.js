@@ -2,11 +2,13 @@ import React from "react";
 
 /*--Assets--*/
 import bg from "../../../assets/img/landing-background.png";
+import { NavigatorService } from "../../../services/navigator/navigator.service";
 
 /*--CSS--*/
 import styles from "./CTA.module.css";
 
 function CTA() {
+  const nav = new NavigatorService();
   const borderRadius = "27px";
   return (
     <div>
@@ -24,7 +26,9 @@ function CTA() {
         <p
           style={{
             color: "#66FCF1",
-            fontSize: "3.4rem",
+            fontSize: "3.8rem",
+            fontFamily: "BlackChancery",
+            letterSpacing: "0.3rem",
           }}
         >
           College Community
@@ -54,10 +58,10 @@ function CTA() {
             gap: "30px",
           }}
         >
-          <div className={styles.Button}>
+          <div className={styles.Button} onClick={() => nav.register()}>
             <p>REGISTER</p>
           </div>
-          <div className={styles.Button}>
+          <div className={styles.Button} onClick={() => nav.login()}>
             <p>LOGIN</p>
           </div>
         </div>

@@ -1,0 +1,69 @@
+.Register {
+  /* width: 500px; */
+  max-width: 500px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: azure;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #1f2833;
+  justify-content: space-between;
+}
+
+.Button {
+  margin-top: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 20px;
+  color: #1f2833;
+  background-color: #66fcf1;
+  border: 1px solid #1f2833;
+  border-radius: 20px;
+  padding: 15px;
+}
+
+.Button:hover {
+  color: #66fcf1;
+  background-color: #1f2833;
+  border: 1px solid #66fcf1;
+}
+
+.Login {
+  margin-top: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 20px;
+  color: #66fcf1;
+  background-color: #1f2833;
+  border: 1px solid #66fcf1;
+  border-radius: 20px;
+  padding: 15px;
+}
+
+.RegisterBody {
+  max-width: 500px;
+  /* padding-left: 20px; */
+  /* padding-right: 20px; */
+  padding-top: -10px;
+  /* min-height: 100vh; */
+  box-sizing: border-box;
+  background-color: azure;
+  /* display: flex;
+  flex-direction: column; */
+  text-align: center;
+  align-items: center;
+  color: #1f2833;
+  justify-content: center;
+}
+
+.Back {
+  width: 100%;
+  text-align: left;
+  font-size: 20px;
+  line-height: 1.5;
+  display: flex;
+}

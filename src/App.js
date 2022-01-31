@@ -2,8 +2,9 @@ import React, { useState, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 /*--Pages--*/
-import { Spinner } from "./components/spinners/Spinner";
+import Spinner from "./components/spinners/Spinner";
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
+const Register = lazy(() => import("./pages/Register/Register"));
 
 export default function App() {
   return (
@@ -11,6 +12,14 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/spinner" element={<Spinner />} />
+          <Route
+            path="/register"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Register />
+              </Suspense>
+            }
+          />
           <Route
             path="/"
             element={

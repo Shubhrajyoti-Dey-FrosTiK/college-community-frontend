@@ -44,3 +44,5 @@ export const Spinner = () => {
     </React.Fragment>
   );
 };
+
+export default Spinner;

@@ -1,7 +1,7 @@
 import React from "react";
 
 /*--Components--*/
-import CTA from "../../components/LandingPage/CTA/CTA";
+const CTA = React.lazy(() => import("../../components/LandingPage/CTA/CTA"));
 
 const LandingPage = () => {
   return (
