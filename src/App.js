@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Spinner from "./components/spinners/Spinner";
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const Register = lazy(() => import("./pages/Register/Register"));
+const Login = lazy(() => import("./pages/Login/Login"));
 
 export default function App() {
   return (
@@ -17,6 +18,14 @@ export default function App() {
             element={
               <Suspense fallback={<Spinner />}>
                 <Register />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Login />
               </Suspense>
             }
           />

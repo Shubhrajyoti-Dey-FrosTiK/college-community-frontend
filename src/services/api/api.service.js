@@ -4,13 +4,16 @@ import { BASE_URL } from "../../constants/baseUrl";
 
 export class APIService {
   async call(method, url, apiData = { headers: {}, body: {} }) {
+    console.log("API Data: ", apiData);
     const URL = `${BASE_URL}${url}`;
     console.log(`${method}: ${URL}`);
     if (method === API_METHODS.GET) {
       const response = await axios.get(URL, apiData.headers);
       return response.data;
     } else if (method === API_METHODS.POST) {
-      const response = await axios.post(URL, apiData.headers, apiData.body);
+      const response = await axios.post(URL, apiData.body, {
+        headers: apiData.headers,
+      });
       return response.data;
     } else if (method === API_METHODS.PUT) {
       const response = await Promise.resolve(

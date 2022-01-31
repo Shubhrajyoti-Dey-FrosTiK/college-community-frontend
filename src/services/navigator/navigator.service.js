@@ -25,4 +25,7 @@ export class NavigatorService {
     this.print(url);
     this.navigate(url);
   };
+  back = () => {
+    this.navigate(-1);
+  };
 }
