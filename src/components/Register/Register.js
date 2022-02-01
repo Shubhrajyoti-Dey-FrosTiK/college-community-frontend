@@ -14,10 +14,12 @@ import styles from "./Register.module.css";
 import { NavigatorService } from "../../services/navigator/navigator.service";
 import { APIService } from "../../services/api/api.service";
 import { API_METHODS } from "../../constants/api";
+import { StorageService } from "../../services/storage/storage.service";
 
 function Register() {
   const ns = new NavigatorService();
   const api = new APIService();
+  const storage = new StorageService();
   const [name, setName] = useState("");
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -43,7 +45,6 @@ function Register() {
   const [lastEmail, setLastEmail] = useState();
 
   const validate = (submit = false) => {
-    console.log(submit);
     const isEmpty = str.isNull();
     const isEmail = str.isEmail();
     let status = true;
@@ -134,6 +135,14 @@ function Register() {
           },
         })
         .then((res) => {
+          if (res.data) {
+            storage.storUserData({
+              username: res.data.username,
+              userid: res.data._id,
+              token: res.token,
+            });
+            ns.home();
+          }
           setServerResponse(res);
           setLastUsername(userName);
           setLastEmail(email);

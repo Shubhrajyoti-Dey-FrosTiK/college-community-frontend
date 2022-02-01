@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import str from "string-validator";
+import { createTheme, ThemeProvider } from "@mui/material";
+import { useDispatch } from "react-redux";
 
 /*------Assets------*/
 import logo from "../../assets/img/logo-light.png";
@@ -10,38 +12,62 @@ import back from "../../assets/img/back-light.png";
 /*------Styles------*/
 import styles from "./Login.module.css";
 
+/*------Redux------*/
+import { updateUser } from "../../redux/slices/User";
+
 /*------Dependencies------*/
 import { NavigatorService } from "../../services/navigator/navigator.service";
 import { APIService } from "../../services/api/api.service";
-import { API_METHODS } from "../../constants/api";
+import { API_METHODS, API_RESPONSE_MESSAGES } from "../../constants/api";
+import { StorageService } from "../../services/storage/storage.service";
 
-function Register() {
+function Login() {
   const ns = new NavigatorService();
   const api = new APIService();
-  const [email, setEmail] = useState("");
+  const storage = new StorageService();
+  const dispatch = useDispatch();
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [emailText, setEmailText] = useState("");
+  const [usernameText, setUsernameText] = useState("");
   const [passwordText, setPasswordText] = useState("");
-  const [emailStatus, setEmailStatus] = useState(false);
+  const [usernameStatus, setUsernameStatus] = useState(false);
   const [passwordStatus, setPasswordStatus] = useState(false);
-  const [emailFocus, setEmailFocus] = useState(false);
+  const [usernameFocus, setUsernameFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
   const [serverResponse, setServerResponse] = useState();
-  const [lastEmail, setLastEmail] = useState();
+  const [lastUsername, setLastUsername] = useState();
+  const [statusText, setStatusText] = useState("");
+
+  const theme = createTheme({
+    status: {
+      danger: "#e53e3e",
+    },
+    palette: {
+      primary: {
+        main: "#0971f1",
+        darker: "#053e85",
+      },
+      neutral: {
+        main: "#64748B",
+        contrastText: "#fff",
+      },
+      error: {
+        main: "#FA8072",
+      },
+    },
+  });
 
   const validate = (submit = false) => {
-    console.log(submit);
     const isEmpty = str.isNull();
-    const isEmail = str.isEmail();
     let status = true;
 
-    if ((emailFocus || submit) && (isEmpty(email) || !isEmail(email))) {
+    if ((usernameFocus || submit) && isEmpty(username)) {
       status = false;
-      setEmailStatus(true);
-      setEmailText("It must be a valid email");
+      setUsernameStatus(true);
+      setUsernameText("It must be a valid email");
     } else {
-      setEmailStatus(false);
-      setEmailText("");
+      setUsernameStatus(false);
+      setUsernameText("");
     }
     if ((passwordFocus || submit) && isEmpty(password)) {
       status = false;
@@ -52,22 +78,6 @@ function Register() {
       setPasswordText("");
     }
 
-    if (serverResponse && !serverResponse.data) {
-      status = false;
-
-      if (
-        serverResponse.message === "Email already exists" &&
-        email === lastEmail
-      ) {
-        status = false;
-        setEmailStatus(true);
-        setEmailText("Email already exists");
-      } else {
-        status = true;
-        setEmailStatus(false);
-        setEmailText("");
-      }
-    }
     return status;
   };
 
@@ -78,20 +88,29 @@ function Register() {
   const handleSubmit = () => {
     const val = validate(true);
     if (val) {
-      // api
-      //   .call(API_METHODS.POST, "/api/user", {
-      //     headers: {},
-      //     body: {
-      //       email,
-      //       username: userName,
-      //       password,
-      //       name,
-      //     },
-      //   })
-      // .then((res) => {
-      //   setServerResponse(res);
-      //   setLastEmail(email);
-      // });
+      api
+        .call(API_METHODS.POST, "/api/user/login", {
+          headers: {},
+          body: {
+            username,
+            password,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (!res.data) {
+            setStatusText("Invalid username or password");
+          } else {
+            storage.storUserData({
+              username: res.data.username,
+              userid: res.data._id,
+              token: res.token,
+            });
+            ns.home();
+          }
+          setServerResponse(res);
+          setLastUsername(username);
+        });
     } else {
       console.log("Some Error Happened");
     }
@@ -123,70 +142,80 @@ function Register() {
             marginLeft: "-7px",
           }}
         >
-          <Box
-            component="form"
-            sx={{
-              input: { color: "white" },
-              "& > :not(style)": {
-                m: 1,
-                width: "100%",
-                color: "white",
-              },
-              "& label": {
-                color: "white",
-              },
-              "& label.Mui-focused": {
-                color: "white",
-              },
-              "& .MuiInput-underline:after": {
-                borderBottomColor: "#66fcf1",
-              },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "#66fcf1",
+          <ThemeProvider theme={theme}>
+            <Box
+              component="form"
+              sx={{
+                input: { color: "white" },
+                "& > :not(style)": {
+                  m: 1,
+                  width: "100%",
+                  color: "white",
                 },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#66fcf1",
+                "& label": {
+                  color: "white",
                 },
-                "&.MuiFormHelperText-root.Mui-error": {
-                  // color: "#66fcf1",
+                "& label.Mui-focused": {
+                  color: "white",
                 },
-              },
-            }}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "80%",
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              fullWidth
-              error={emailStatus}
-              helperText={emailText}
-              id="outlined-basic"
-              label="Email Id"
-              variant="outlined"
-              margin="dense"
-              value={email}
-              onFocus={() => setEmailFocus(true)}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              error={passwordStatus}
-              helperText={passwordText}
-              id="outlined-basic"
-              label="Password"
-              variant="outlined"
-              margin="dense"
-              onFocus={() => setPasswordFocus(true)}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Box>
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "#66fcf1",
+                },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#66fcf1",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#66fcf1",
+                  },
+                  "& helperText-root.Mui-error": {
+                    color: "#FA8072",
+                  },
+                },
+              }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "80%",
+              }}
+              // theme={theme}
+              noValidate
+              autoComplete="off"
+            >
+              <TextField
+                fullWidth
+                error={usernameStatus}
+                helperText={usernameText}
+                id="outlined-basic"
+                label="Username"
+                variant="outlined"
+                margin="dense"
+                value={username}
+                onFocus={() => setUsernameFocus(true)}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  setStatusText("");
+                }}
+              />
+              <TextField
+                fullWidth
+                error={passwordStatus}
+                helperText={passwordText}
+                id="outlined-basic"
+                label="Password"
+                variant="outlined"
+                margin="dense"
+                onFocus={() => setPasswordFocus(true)}
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setStatusText("");
+                }}
+              />
+            </Box>
+          </ThemeProvider>
         </div>
+        <p style={{ color: "#FA8072" }}>{statusText}</p>
         <div onClick={handleSubmit} className={styles.Button}>
           LOGIN
         </div>
@@ -200,4 +229,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;
