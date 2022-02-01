@@ -15,6 +15,7 @@ import { NavigatorService } from "../../services/navigator/navigator.service";
 import { APIService } from "../../services/api/api.service";
 import { API_METHODS } from "../../constants/api";
 import { StorageService } from "../../services/storage/storage.service";
+import Spinner from "../spinners/Spinner";
 
 function Register() {
   const ns = new NavigatorService();
@@ -43,6 +44,7 @@ function Register() {
   const [serverResponse, setServerResponse] = useState();
   const [lastUsername, setLastUsername] = useState();
   const [lastEmail, setLastEmail] = useState();
+  const [loading, setLoading] = useState(false);
 
   const validate = (submit = false) => {
     const isEmpty = str.isNull();
@@ -124,6 +126,7 @@ function Register() {
   const handleSubmit = () => {
     const val = validate(true);
     if (val) {
+      setLoading(true);
       api
         .call(API_METHODS.POST, "/api/user", {
           headers: {},
@@ -135,6 +138,8 @@ function Register() {
           },
         })
         .then((res) => {
+          console.log(res);
+          setLoading(false);
           if (res.data) {
             storage.storUserData({
               username: res.data.username,
@@ -153,134 +158,137 @@ function Register() {
   };
 
   return (
-    <div className={styles.Register}>
-      <div className={styles.Back}>
-        <img
-          src={back}
-          alt="back"
-          onClick={() => ns.back()}
-          style={{ cursor: "pointer" }}
-        />
-        <p onClick={() => ns.home()} style={{ cursor: "pointer" }}>
-          Back
-        </p>
-      </div>
-      <div className={styles.RegisterBody}>
-        <img src={logo} alt="logo" style={{ width: "200px" }} />
-        <h2 style={{ marginTop: "30px" }}>Lets get started !!</h2>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            width: "100%",
-            marginLeft: "-7px",
-          }}
-        >
-          <Box
-            component="form"
-            sx={{
-              "& > :not(style)": {
-                m: 1,
-                width: "100%",
-              },
-              "& label.Mui-focused": {
-                color: "#1f2833",
-              },
-              "& .MuiInput-underline:after": {
-                borderBottomColor: "#1f2833",
-              },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "#1f2833",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#66fcf1",
-                },
-                "&.MuiFormHelperText-root.Mui-error": {
-                  color: "#66fcf1",
-                },
-              },
-            }}
+    <React.Fragment>
+      {loading && <Spinner />}
+      <div className={styles.Register}>
+        <div className={styles.Back}>
+          <img
+            src={back}
+            alt="back"
+            onClick={() => ns.back()}
+            style={{ cursor: "pointer" }}
+          />
+          <p onClick={() => ns.home()} style={{ cursor: "pointer" }}>
+            Back
+          </p>
+        </div>
+        <div className={styles.RegisterBody}>
+          <img src={logo} alt="logo" style={{ width: "200px" }} />
+          <h2 style={{ marginTop: "30px" }}>Lets get started !!</h2>
+          <div
             style={{
               display: "flex",
-              flexDirection: "column",
-              width: "80%",
+              justifyContent: "center",
+              width: "100%",
+              marginLeft: "-7px",
             }}
-            noValidate
-            autoComplete="off"
           >
-            <TextField
-              fullWidth
-              error={nameStatus}
-              helperText={nameText}
-              id="outlined-basic"
-              label="Name"
-              variant="outlined"
-              margin="dense"
-              onFocus={() => setNameFocus(true)}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              error={emailStatus}
-              helperText={emailText}
-              id="outlined-basic"
-              label="Email Id"
-              variant="outlined"
-              margin="dense"
-              value={email}
-              onFocus={() => setEmailFocus(true)}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              error={passwordStatus}
-              helperText={passwordText}
-              id="outlined-basic"
-              label="Password"
-              variant="outlined"
-              margin="dense"
-              onFocus={() => setPasswordFocus(true)}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              error={cPasswordStatus}
-              helperText={cPasswordText}
-              id="outlined-basic"
-              label="Confirm Password"
-              variant="outlined"
-              margin="dense"
-              onFocus={() => setCPasswordFocus(true)}
-              value={cPassword}
-              onChange={(e) => setCPassword(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              error={userNameStatus}
-              helperText={userNameText}
-              id="outlined-basic"
-              label="Username"
-              variant="outlined"
-              margin="dense"
-              onFocus={() => setUserNameFocus(true)}
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-            />
-          </Box>
+            <Box
+              component="form"
+              sx={{
+                "& > :not(style)": {
+                  m: 1,
+                  width: "100%",
+                },
+                "& label.Mui-focused": {
+                  color: "#1f2833",
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "#1f2833",
+                },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#1f2833",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#66fcf1",
+                  },
+                  "&.MuiFormHelperText-root.Mui-error": {
+                    color: "#66fcf1",
+                  },
+                },
+              }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "80%",
+              }}
+              noValidate
+              autoComplete="off"
+            >
+              <TextField
+                fullWidth
+                error={nameStatus}
+                helperText={nameText}
+                id="outlined-basic"
+                label="Name"
+                variant="outlined"
+                margin="dense"
+                onFocus={() => setNameFocus(true)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <TextField
+                fullWidth
+                error={emailStatus}
+                helperText={emailText}
+                id="outlined-basic"
+                label="Email Id"
+                variant="outlined"
+                margin="dense"
+                value={email}
+                onFocus={() => setEmailFocus(true)}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <TextField
+                fullWidth
+                error={passwordStatus}
+                helperText={passwordText}
+                id="outlined-basic"
+                label="Password"
+                variant="outlined"
+                margin="dense"
+                onFocus={() => setPasswordFocus(true)}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <TextField
+                fullWidth
+                error={cPasswordStatus}
+                helperText={cPasswordText}
+                id="outlined-basic"
+                label="Confirm Password"
+                variant="outlined"
+                margin="dense"
+                onFocus={() => setCPasswordFocus(true)}
+                value={cPassword}
+                onChange={(e) => setCPassword(e.target.value)}
+              />
+              <TextField
+                fullWidth
+                error={userNameStatus}
+                helperText={userNameText}
+                id="outlined-basic"
+                label="Username"
+                variant="outlined"
+                margin="dense"
+                onFocus={() => setUserNameFocus(true)}
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </Box>
+          </div>
+          <div onClick={handleSubmit} className={styles.Button}>
+            CREATE ACCOUNT
+          </div>
+          <h2>OR</h2>
+          <div onClick={() => ns.login()} className={styles.Login}>
+            LOGIN
+          </div>
         </div>
-        <div onClick={handleSubmit} className={styles.Button}>
-          CREATE ACCOUNT
-        </div>
-        <h2>OR</h2>
-        <div onClick={() => ns.login()} className={styles.Login}>
-          LOGIN
-        </div>
+        <div style={{ height: "20px" }}></div>
       </div>
-      <div style={{ height: "20px" }}></div>
-    </div>
+    </React.Fragment>
   );
 }
 

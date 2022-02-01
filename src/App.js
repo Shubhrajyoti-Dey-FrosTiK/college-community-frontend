@@ -18,12 +18,6 @@ const Home = lazy(() => import("./pages/Home/Home"));
 export default function App() {
   const storage = new StorageService();
   const user = useSelector(selectUser);
-  // const [user, setUser] = useState(storage.getUserData());
-  const [lastUserDetails, setLastUserDetails] = useState({
-    username: null,
-    userid: null,
-    token: null,
-  });
 
   return (
     <React.Fragment>

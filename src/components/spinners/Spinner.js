@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { RingLoader } from "react-spinners";
 import { css } from "@emotion/react";
 
-export const Spinner = () => {
+export const Spinner = (props) => {
   let [loading, setLoading] = useState(true);
   let [color, setColor] = useState("#ffffff");
   const override = css`
-    position: absolute;
+    position: relative;
     height: 100px;
     width: 100px;
     top: 50%;
@@ -20,25 +20,39 @@ export const Spinner = () => {
       <div
         style={{
           position: "absolute",
-          height: "100px",
-          width: "100px",
-          top: "50%",
-          left: "50%",
-          marginLeft: " -50px",
-          marginTop: "-50px",
+          zIndex: "2",
+          // height: "100px",
+          // width: "100px",
+          // top: "50%",
+          // left: "50%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          height: "100vh",
+          width: "100vw",
+          backgroundColor: `${
+            props.light ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.6)"
+          }`,
+          // marginLeft: " -50px",
+          // marginTop: "-50px",
           backgroundSize: "100%",
         }}
       >
-        <RingLoader loading={true} color={"#003366"} size={70} />
+        <RingLoader
+          loading={true}
+          color={`${props.light ? "#66fcf1" : "#003366"}`}
+          size={70}
+        />
         <h3
           style={{
-            marginTop: "100px",
+            // marginTop: "100px",
             textAlign: "center",
-            paddingLeft: "-5px",
-            color: "#003366",
+            paddingLeft: "5px",
+            color: `${props.light ? "white" : "#003366"}`,
           }}
         >
-          Loading..
+          Loading....
         </h3>
       </div>
     </React.Fragment>
