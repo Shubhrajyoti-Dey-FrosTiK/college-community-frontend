@@ -10,6 +10,7 @@ import { StorageService } from "./services/storage/storage.service";
 
 /*--Pages--*/
 import Spinner from "./components/spinners/Spinner";
+import Navbar from "./components/Navbar/Navbar";
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const Register = lazy(() => import("./pages/Register/Register"));
 const Login = lazy(() => import("./pages/Login/Login"));
@@ -50,16 +51,19 @@ export default function App() {
             />
           </Routes>
         ) : (
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Suspense fallback={<Spinner />}>
-                  <Home />
-                </Suspense>
-              }
-            />
-          </Routes>
+          <React.Fragment>
+            <Navbar />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Suspense fallback={<Spinner />}>
+                    <Home />
+                  </Suspense>
+                }
+              />
+            </Routes>
+          </React.Fragment>
         )}
       </BrowserRouter>
     </React.Fragment>

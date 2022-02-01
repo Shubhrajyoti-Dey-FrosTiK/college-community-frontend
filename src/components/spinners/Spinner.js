@@ -50,6 +50,7 @@ export const Spinner = (props) => {
             textAlign: "center",
             paddingLeft: "5px",
             color: `${props.light ? "white" : "#003366"}`,
+            marginTop: "30px",
           }}
         >
           Loading....

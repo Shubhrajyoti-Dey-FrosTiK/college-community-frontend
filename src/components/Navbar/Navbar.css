@@ -1,0 +1,51 @@
+.Navbar {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.TopNav {
+  background-color: #1f2833;
+  width: 100%;
+  height: 60px;
+  box-sizing: border-box;
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  color: whitesmoke;
+  padding: 20px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.headroom {
+  will-change: transform;
+  transition: transform 200ms linear;
+}
+.headroom--pinned {
+  transform: translateY(0%);
+}
+.headroom--unpinned {
+  transform: translateY(-100%);
+}
+
+@media screen and (max-width: 768px) {
+  .PC {
+    display: none;
+  }
+  .mobile {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .mobile {
+    display: none;
+  }
+  .PC {
+    display: block;
+  }
+}
