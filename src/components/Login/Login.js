@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import str from "string-validator";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { useDispatch } from "react-redux";
+import { Spinner } from "../../components/spinners/Spinner";
 
 /*------Assets------*/
 import logo from "../../assets/img/logo-light.png";
@@ -37,6 +38,7 @@ function Login() {
   const [serverResponse, setServerResponse] = useState();
   const [lastUsername, setLastUsername] = useState();
   const [statusText, setStatusText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const theme = createTheme({
     status: {
@@ -88,6 +90,7 @@ function Login() {
   const handleSubmit = () => {
     const val = validate(true);
     if (val) {
+      setLoading(true);
       api
         .call(API_METHODS.POST, "/api/user/login", {
           headers: {},
@@ -97,6 +100,7 @@ function Login() {
           },
         })
         .then((res) => {
+          setLoading(false);
           console.log(res);
           if (!res.data) {
             setStatusText("Invalid username or password");
@@ -117,115 +121,118 @@ function Login() {
   };
 
   return (
-    <div className={styles.Login}>
-      <div className={styles.Back}>
-        <img
-          src={back}
-          alt="back"
-          onClick={() => ns.home()}
-          style={{ cursor: "pointer" }}
-        />
-        <p onClick={() => ns.back()} style={{ cursor: "pointer" }}>
-          Back
-        </p>
-      </div>
-      <div className={styles.RegisterBody}>
-        <img src={logo} alt="logo" style={{ width: "200px" }} />
-        <h2 style={{ marginTop: "30px", color: "#66fcf1" }}>
-          Glad to see you back !!
-        </h2>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            width: "100%",
-            marginLeft: "-7px",
-          }}
-        >
-          <ThemeProvider theme={theme}>
-            <Box
-              component="form"
-              sx={{
-                input: { color: "white" },
-                "& > :not(style)": {
-                  m: 1,
-                  width: "100%",
-                  color: "white",
-                },
-                "& label": {
-                  color: "white",
-                },
-                "& label.Mui-focused": {
-                  color: "white",
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "#66fcf1",
-                },
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#66fcf1",
+    <React.Fragment>
+      {loading && <Spinner light />}
+      <div className={styles.Login}>
+        <div className={styles.Back}>
+          <img
+            src={back}
+            alt="back"
+            onClick={() => ns.home()}
+            style={{ cursor: "pointer" }}
+          />
+          <p onClick={() => ns.back()} style={{ cursor: "pointer" }}>
+            Back
+          </p>
+        </div>
+        <div className={styles.RegisterBody}>
+          <img src={logo} alt="logo" style={{ width: "200px" }} />
+          <h2 style={{ marginTop: "30px", color: "#66fcf1" }}>
+            Glad to see you back !!
+          </h2>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+              marginLeft: "-7px",
+            }}
+          >
+            <ThemeProvider theme={theme}>
+              <Box
+                component="form"
+                sx={{
+                  input: { color: "white" },
+                  "& > :not(style)": {
+                    m: 1,
+                    width: "100%",
+                    color: "white",
                   },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#66fcf1",
+                  "& label": {
+                    color: "white",
                   },
-                  "& helperText-root.Mui-error": {
-                    color: "#FA8072",
+                  "& label.Mui-focused": {
+                    color: "white",
                   },
-                },
-              }}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                width: "80%",
-              }}
-              // theme={theme}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                fullWidth
-                error={usernameStatus}
-                helperText={usernameText}
-                id="outlined-basic"
-                label="Username"
-                variant="outlined"
-                margin="dense"
-                value={username}
-                onFocus={() => setUsernameFocus(true)}
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                  setStatusText("");
+                  "& .MuiInput-underline:after": {
+                    borderBottomColor: "#66fcf1",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "#66fcf1",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#66fcf1",
+                    },
+                    "& helperText-root.Mui-error": {
+                      color: "#FA8072",
+                    },
+                  },
                 }}
-              />
-              <TextField
-                fullWidth
-                error={passwordStatus}
-                helperText={passwordText}
-                id="outlined-basic"
-                label="Password"
-                variant="outlined"
-                margin="dense"
-                onFocus={() => setPasswordFocus(true)}
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setStatusText("");
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "80%",
                 }}
-              />
-            </Box>
-          </ThemeProvider>
+                // theme={theme}
+                noValidate
+                autoComplete="off"
+              >
+                <TextField
+                  fullWidth
+                  error={usernameStatus}
+                  helperText={usernameText}
+                  id="outlined-basic"
+                  label="Username"
+                  variant="outlined"
+                  margin="dense"
+                  value={username}
+                  onFocus={() => setUsernameFocus(true)}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                    setStatusText("");
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  error={passwordStatus}
+                  helperText={passwordText}
+                  id="outlined-basic"
+                  label="Password"
+                  variant="outlined"
+                  margin="dense"
+                  onFocus={() => setPasswordFocus(true)}
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setStatusText("");
+                  }}
+                />
+              </Box>
+            </ThemeProvider>
+          </div>
+          <p style={{ color: "#FA8072" }}>{statusText}</p>
+          <div onClick={handleSubmit} className={styles.Button}>
+            LOGIN
+          </div>
+          <h2 style={{ color: "white" }}>OR</h2>
+          <div onClick={() => ns.register()} className={styles.Register}>
+            CREATE ACCOUNT
+          </div>
         </div>
-        <p style={{ color: "#FA8072" }}>{statusText}</p>
-        <div onClick={handleSubmit} className={styles.Button}>
-          LOGIN
-        </div>
-        <h2 style={{ color: "white" }}>OR</h2>
-        <div onClick={() => ns.register()} className={styles.Register}>
-          CREATE ACCOUNT
-        </div>
+        <div style={{ height: "20px" }}></div>
       </div>
-      <div style={{ height: "20px" }}></div>
-    </div>
+    </React.Fragment>
   );
 }
 
