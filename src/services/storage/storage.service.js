@@ -5,10 +5,12 @@ import {
   createPost,
   cancelCreatePost,
 } from "../../redux/slices/Post";
+import { selectPage, changePage } from "../../redux/slices/Page";
 
 export class StorageService {
   user = useSelector(selectUser);
   post = useSelector(selectPost);
+  page = useSelector(selectPage);
   dispatch = useDispatch();
 
   storUserData = (userData) => {
@@ -29,5 +31,13 @@ export class StorageService {
 
   cancelCreatePost = () => {
     this.dispatch(cancelCreatePost());
+  };
+
+  getCurrentPage = () => {
+    return this.page.page;
+  };
+
+  changePage = (page) => {
+    this.dispatch(changePage(page));
   };
 }

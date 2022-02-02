@@ -1,7 +1,7 @@
 .Navbar {
   position: fixed;
   width: 100vw;
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -17,7 +17,7 @@
   /* justify-content: space-between; */
   align-items: center;
   color: whitesmoke;
-  padding: 20px;
+  /* padding: 20px; */
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 

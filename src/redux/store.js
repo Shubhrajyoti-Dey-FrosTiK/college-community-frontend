@@ -18,7 +18,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whiteList: ["user"],
+  whiteList: ["user", "page"],
   blacklist: ["post"],
 };
 

@@ -20,8 +20,23 @@ export class NavigatorService {
     this.print(url);
     this.navigate(url);
   };
-  profile = (param) => {
-    const url = "/profile" + param;
+  post = (param = "") => {
+    const url = "/posts" + param;
+    this.print(url);
+    this.navigate(url);
+  };
+  likes = (param = "") => {
+    const url = "/likes" + param;
+    this.print(url);
+    this.navigate(url);
+  };
+  activity = (param = "") => {
+    const url = "/activity" + param;
+    this.print(url);
+    this.navigate(url);
+  };
+  notifications = (param = "") => {
+    const url = "/notifications" + param;
     this.print(url);
     this.navigate(url);
   };
