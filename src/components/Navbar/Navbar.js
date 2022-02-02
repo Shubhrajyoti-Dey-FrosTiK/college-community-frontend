@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import headroom from "headroom.js";
 import "./Navbar.css";
+import CreatePost from "../CreatePost/CreatePost";
 
 /*-----MUI-----*/
 import { styled } from "@mui/material/styles";
@@ -39,8 +40,11 @@ import Like from "../../assets/img/like.png";
 /*---Dependencies---*/
 import { NavigatorService } from "../../services/navigator/navigator.service";
 import { StorageService } from "../../services/storage/storage.service";
+import { useSelector } from "react-redux";
+import { selectPost } from "../../redux/slices/Post";
 
 function Navbar() {
+  const post = useSelector(selectPost);
   const ns = new NavigatorService();
   const storage = new StorageService();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -78,12 +82,13 @@ function Navbar() {
   };
   useEffect(() => {
     const topNav = document.getElementsByClassName("TopNav")[0];
-    console.log(topNav);
     var h = new headroom(topNav);
     h.init();
   }, []);
+
   return (
     <React.Fragment>
+      {post.open && <CreatePost />}
       <div className="Navbar">
         <div className="TopNav">
           <AppBar position="static" style={{ backgroundColor: "#1f2833" }}>
@@ -178,63 +183,79 @@ function Navbar() {
             </Container>
           </AppBar>
         </div>
-        <div className="BottomNav"></div>
-      </div>
-      <div>
-        <AppBar
-          position="fixed"
-          color="primary"
-          sx={{
-            top: "auto",
-            bottom: 0,
-            display: { xs: "flex", md: "none" },
-            backgroundColor: "#1f2833",
-            borderTopRightRadius: "30px",
-            borderTopLeftRadius: "30px",
-          }}
-        >
-          <ThemeProvider theme={addTheme}>
-            <Toolbar
-              style={{ display: "flex", justifyContent: "space-between" }}
+        <div className="BottomNav">
+          <div>
+            <AppBar
+              position="fixed"
+              color="primary"
+              sx={{
+                top: "auto",
+                bottom: 0,
+                // display: { xs: "flex", md: "none" },
+                backgroundColor: "#1f2833",
+                borderTopRightRadius: "30px",
+                borderTopLeftRadius: "30px",
+              }}
             >
-              <div
-                style={{
-                  cursor: "pointer",
-                }}
-              >
-                <img src={Friends} alt="Friends" style={{ height: "30px" }} />
-              </div>
-              <div
-                style={{
-                  cursor: "pointer",
-                }}
-              >
-                <img src={Like} alt="like" style={{ height: "30px" }} />
-              </div>
-              <div
-                style={{
-                  cursor: "pointer",
-                }}
-              >
-                <img
-                  src={Notifications}
-                  alt="Notifications"
-                  style={{ height: "30px", marginLeft: "90px" }}
-                />
-              </div>
-              <div
-                style={{
-                  cursor: "pointer",
-                }}
-              >
-                <img src={Activity} alt="Activity" style={{ height: "30px" }} />
-              </div>
-              <StyledFab color="primary" aria-label="add">
-                <img src={Add} alt="Add" style={{ height: "80px" }} />
-              </StyledFab>
-            </Toolbar>
-          </ThemeProvider>
-        </AppBar>
+              <ThemeProvider theme={addTheme}>
+                <Toolbar
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <div
+                    style={{
+                      cursor: "pointer",
+                    }}
+                  >
+                    <img
+                      src={Friends}
+                      alt="Friends"
+                      style={{ height: "30px" }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      cursor: "pointer",
+                    }}
+                  >
+                    <img src={Like} alt="like" style={{ height: "30px" }} />
+                  </div>
+                  <div
+                    style={{
+                      cursor: "pointer",
+                    }}
+                  >
+                    <img
+                      src={Notifications}
+                      alt="Notifications"
+                      style={{ height: "30px", marginLeft: "90px" }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      cursor: "pointer",
+                    }}
+                  >
+                    <img
+                      src={Activity}
+                      alt="Activity"
+                      style={{ height: "30px" }}
+                    />
+                  </div>
+                  <StyledFab color="primary" aria-label="add">
+                    <img
+                      src={Add}
+                      alt="Add"
+                      style={{ height: "80px" }}
+                      onClick={() => {
+                        storage.createPost();
+                      }}
+                    />
+                  </StyledFab>
+                </Toolbar>
+              </ThemeProvider>
+            </AppBar>
+          </div>
+        </div>
       </div>
     </React.Fragment>
   );

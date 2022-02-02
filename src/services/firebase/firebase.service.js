@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { storage } from "../../firebase";
+import { StorageService } from "../storage/storage.service";
 
 export class FirebaseService {
+  st = new StorageService();
   uploadToFirebaseStorage(files = []) {
+    const user = this.st.getUserData();
+    const date = Date.now();
     let urls = [];
     if (files.length > 0) {
       files.map((file) => {
-        const uploadTask = storage.ref(`/img/${file.name}`).put(file);
+        const baseFilePath = `/img/${user.username}/${date}-${file.name}`;
+        console.log(baseFilePath);
+        const uploadTask = storage.ref(baseFilePath).put(file);
         uploadTask.on(
           "state_changed",
           (snapshot) => {
@@ -19,8 +25,7 @@ export class FirebaseService {
           },
           () => {
             storage
-              .ref("img")
-              .child(file.name)
+              .ref(baseFilePath)
               .getDownloadURL()
               .then((newUrl) => {
                 urls.push(newUrl);

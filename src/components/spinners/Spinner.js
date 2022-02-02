@@ -20,7 +20,7 @@ export const Spinner = (props) => {
       <div
         style={{
           position: "absolute",
-          zIndex: "2",
+          zIndex: "2500",
           // height: "100px",
           // width: "100px",
           // top: "50%",
