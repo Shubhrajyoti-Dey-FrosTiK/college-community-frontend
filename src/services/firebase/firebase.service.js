@@ -4,12 +4,14 @@ import { StorageService } from "../storage/storage.service";
 
 export class FirebaseService {
   st = new StorageService();
+
   uploadToFirebaseStorage(files = []) {
     const user = this.st.getUserData();
     const date = Date.now();
+    this.st.triggerPendingPost();
     let urls = [];
     if (files.length > 0) {
-      files.map((file) => {
+      files.map((file, index) => {
         const baseFilePath = `/img/${user.username}/${date}-${file.name}`;
         console.log(baseFilePath);
         const uploadTask = storage.ref(baseFilePath).put(file);
@@ -29,6 +31,11 @@ export class FirebaseService {
               .getDownloadURL()
               .then((newUrl) => {
                 urls.push(newUrl);
+                this.st.pushImageUrl(newUrl);
+                if (index === files.length - 1) {
+                  console.log("Initializing post");
+                  this.st.triggerPendingPost();
+                }
                 console.log(newUrl);
               });
           }

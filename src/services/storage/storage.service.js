@@ -4,6 +4,11 @@ import {
   selectPost,
   createPost,
   cancelCreatePost,
+  triggerPendingPost,
+  initializePendingPost,
+  pushImageUrl,
+  clearImageUrl,
+  clearPendingPost,
 } from "../../redux/slices/Post";
 import { selectPage, changePage } from "../../redux/slices/Page";
 
@@ -13,11 +18,13 @@ export class StorageService {
   page = useSelector(selectPage);
   dispatch = useDispatch();
 
+  /*-----User-----*/
   storUserData = (userData) => {
     this.dispatch(updateUser(userData));
   };
 
   getUserData = () => {
+    console.log(this.user);
     return this.user;
   };
 
@@ -25,6 +32,7 @@ export class StorageService {
     this.dispatch(deleteUser());
   };
 
+  /*-----Post-----*/
   createPost = () => {
     this.dispatch(createPost());
   };
@@ -33,11 +41,33 @@ export class StorageService {
     this.dispatch(cancelCreatePost());
   };
 
-  getCurrentPage = () => {
-    return this.page.page;
+  triggerPendingPost = () => {
+    this.dispatch(triggerPendingPost());
   };
 
+  initializePendingPost = () => {
+    this.dispatch(initializePendingPost());
+  };
+
+  pushImageUrl = (imageUrl = "") => {
+    this.dispatch(pushImageUrl(imageUrl));
+  };
+
+  clearPendingTasks = () => {
+    this.dispatch(clearImageUrl());
+    this.dispatch(clearPendingPost());
+  };
+
+  getPostData = () => {
+    return this.post;
+  };
+
+  /*-----Page-----*/
   changePage = (page) => {
     this.dispatch(changePage(page));
+  };
+
+  getCurrentPage = () => {
+    return this.page.page;
   };
 }

@@ -17,8 +17,8 @@ function SideNav() {
   const storage = new StorageService();
   const selectedBackgroundColor = "#1F2833";
   const [options, setOptions] = useState([
-    "Posts",
-    "Likes",
+    "Community",
+    "Friends",
     "Activity",
     "Notifications",
   ]);
@@ -26,11 +26,11 @@ function SideNav() {
   const handleClick = (page) => {
     storage.changePage(page);
     switch (page) {
-      case "Post":
-        ns.post();
+      case "Community":
+        ns.community();
         break;
-      case "Likes":
-        ns.likes();
+      case "Friends":
+        ns.friends();
         break;
       case "Activity":
         ns.activity();

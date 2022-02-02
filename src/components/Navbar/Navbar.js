@@ -230,7 +230,7 @@ export function BottomNav() {
                   cursor: "pointer",
                 }}
                 onClick={() => {
-                  ns.post();
+                  ns.community();
                 }}
               >
                 <img src={Friends} alt="Friends" style={{ height: "30px" }} />
@@ -240,7 +240,7 @@ export function BottomNav() {
                   cursor: "pointer",
                 }}
                 onClick={() => {
-                  ns.likes();
+                  ns.friends();
                 }}
               >
                 <img src={Like} alt="like" style={{ height: "30px" }} />

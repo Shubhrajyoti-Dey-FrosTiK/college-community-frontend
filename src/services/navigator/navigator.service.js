@@ -20,13 +20,13 @@ export class NavigatorService {
     this.print(url);
     this.navigate(url);
   };
-  post = (param = "") => {
-    const url = "/posts" + param;
+  community = (param = "") => {
+    const url = "/community" + param;
     this.print(url);
     this.navigate(url);
   };
-  likes = (param = "") => {
-    const url = "/likes" + param;
+  friends = (param = "") => {
+    const url = "/friends" + param;
     this.print(url);
     this.navigate(url);
   };

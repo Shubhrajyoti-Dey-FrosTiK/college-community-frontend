@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 /*-----Components-----*/
@@ -11,6 +11,7 @@ import { StorageService } from "../../services/storage/storage.service";
 import styles from "./Home.module.css";
 
 const SideNav = React.lazy(() => import("../../components/Home/SideNav"));
+const Community = React.lazy(() => import("../Community/Community"));
 
 function Home() {
   const ns = new NavigatorService();
@@ -23,10 +24,17 @@ function Home() {
         </div>
         <div className={styles.Content}>
           <Routes>
-            <Route path="/posts" element={<SpinnerV2 />} />
             <Route
-              path="/likes"
-              element={<h1 style={{ fontSize: "100px" }}>Likes</h1>}
+              path="/community"
+              element={
+                <Suspense fallback={<SpinnerV2 />}>
+                  <Community />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/friends"
+              element={<h1 style={{ fontSize: "100px" }}>Friends</h1>}
             />
             <Route
               path="/activity"
@@ -38,7 +46,11 @@ function Home() {
             />
             <Route
               path="*"
-              element={<h1 style={{ fontSize: "100px" }}>POst</h1>}
+              element={
+                <Suspense fallback={<SpinnerV2 />}>
+                  <Community />
+                </Suspense>
+              }
             />
           </Routes>
         </div>
