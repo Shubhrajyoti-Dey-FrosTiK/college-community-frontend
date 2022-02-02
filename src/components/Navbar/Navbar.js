@@ -24,7 +24,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { createTheme } from "@mui/material";
+import { BottomNavigation, createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 
 /*---Assets---*/
@@ -43,7 +43,7 @@ import { StorageService } from "../../services/storage/storage.service";
 import { useSelector } from "react-redux";
 import { selectPost } from "../../redux/slices/Post";
 
-function Navbar() {
+export function TopNav() {
   const post = useSelector(selectPost);
   const ns = new NavigatorService();
   const storage = new StorageService();
@@ -183,82 +183,104 @@ function Navbar() {
             </Container>
           </AppBar>
         </div>
-        <div className="BottomNav">
-          <div>
-            <AppBar
-              position="fixed"
-              color="primary"
-              sx={{
-                top: "auto",
-                bottom: 0,
-                // display: { xs: "flex", md: "none" },
-                backgroundColor: "#1f2833",
-                borderTopRightRadius: "30px",
-                borderTopLeftRadius: "30px",
-              }}
-            >
-              <ThemeProvider theme={addTheme}>
-                <Toolbar
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <div
-                    style={{
-                      cursor: "pointer",
-                    }}
-                  >
-                    <img
-                      src={Friends}
-                      alt="Friends"
-                      style={{ height: "30px" }}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      cursor: "pointer",
-                    }}
-                  >
-                    <img src={Like} alt="like" style={{ height: "30px" }} />
-                  </div>
-                  <div
-                    style={{
-                      cursor: "pointer",
-                    }}
-                  >
-                    <img
-                      src={Notifications}
-                      alt="Notifications"
-                      style={{ height: "30px", marginLeft: "90px" }}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      cursor: "pointer",
-                    }}
-                  >
-                    <img
-                      src={Activity}
-                      alt="Activity"
-                      style={{ height: "30px" }}
-                    />
-                  </div>
-                  <StyledFab color="primary" aria-label="add">
-                    <img
-                      src={Add}
-                      alt="Add"
-                      style={{ height: "80px" }}
-                      onClick={() => {
-                        storage.createPost();
-                      }}
-                    />
-                  </StyledFab>
-                </Toolbar>
-              </ThemeProvider>
-            </AppBar>
-          </div>
-        </div>
       </div>
     </React.Fragment>
   );
 }
 
-export default Navbar;
+export function BottomNav() {
+  const storage = new StorageService();
+  const ns = new NavigatorService();
+  const addTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#1f2833",
+      },
+    },
+  });
+  const StyledFab = styled(Fab)({
+    position: "absolute",
+    zIndex: 1,
+    top: -30,
+    left: 0,
+    right: 0,
+    margin: "0 auto",
+  });
+  return (
+    <div className="BottomNav">
+      <div>
+        <AppBar
+          position="fixed"
+          color="primary"
+          sx={{
+            top: "auto",
+            bottom: 0,
+            display: { xs: "flex", md: "none" },
+            backgroundColor: "#1f2833",
+            borderTopRightRadius: "30px",
+            borderTopLeftRadius: "30px",
+          }}
+        >
+          <ThemeProvider theme={addTheme}>
+            <Toolbar
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <div
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  ns.community();
+                }}
+              >
+                <img src={Friends} alt="Friends" style={{ height: "30px" }} />
+              </div>
+              <div
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  ns.friends();
+                }}
+              >
+                <img src={Like} alt="like" style={{ height: "30px" }} />
+              </div>
+              <div
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => ns.notifications()}
+              >
+                <img
+                  src={Notifications}
+                  alt="Notifications"
+                  style={{ height: "30px", marginLeft: "90px" }}
+                />
+              </div>
+              <div
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  ns.activity();
+                }}
+              >
+                <img src={Activity} alt="Activity" style={{ height: "30px" }} />
+              </div>
+              <StyledFab color="primary" aria-label="add">
+                <img
+                  src={Add}
+                  alt="Add"
+                  style={{ height: "80px" }}
+                  onClick={() => {
+                    storage.createPost();
+                  }}
+                />
+              </StyledFab>
+            </Toolbar>
+          </ThemeProvider>
+        </AppBar>
+      </div>
+    </div>
+  );
+}

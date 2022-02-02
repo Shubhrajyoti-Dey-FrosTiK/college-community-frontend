@@ -105,11 +105,12 @@ function Login() {
           if (!res.data) {
             setStatusText("Invalid username or password");
           } else {
-            storage.storUserData({
+            const newUser = {
               username: res.data.username,
               userid: res.data._id,
               token: res.token,
-            });
+            };
+            storage.storUserData(newUser);
             ns.home();
           }
           setServerResponse(res);

@@ -34,7 +34,6 @@ function CreatePost() {
   const post = useSelector(selectPost);
   const storage = new StorageService();
   const api = new APIService();
-  console.log(storage.getUserData());
   const [files, setFiles] = useState([]);
   const [numFiles, setNumFiles] = useState(0);
   const [step, setStep] = useState(1);
@@ -84,6 +83,34 @@ function CreatePost() {
 
   useEffect(() => {
     validate();
+    if (post.pendingImageUrl.length === numFiles && post.pendingPost) {
+      const user = storage.getUserData();
+      api
+        .call(API_METHODS.POST, "/api/posts/", {
+          headers: {
+            authorization: user.token,
+            username: user.username,
+            userid: user.userid,
+          },
+          body: {
+            title,
+            description,
+            image: post.pendingImageUrl,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setLoading(false);
+          setStep(3);
+          if (res.error) {
+            setError(true);
+          } else {
+            setError(false);
+          }
+        });
+      storage.clearPendingTasks();
+    }
+    console.log(post);
   });
 
   const AddFiles = (event) => {
@@ -106,56 +133,11 @@ function CreatePost() {
       return;
     }
     setLoading(true);
-    const user = storage.getUserData();
+
     if (numFiles > 0) {
-      Promise.resolve(fbs.uploadToFirebaseStorage(files)).then((response) => {
-        api
-          .call(API_METHODS.POST, "/api/posts/", {
-            headers: {
-              authorization: user.token,
-              username: user.username,
-              userid: user.userid,
-            },
-            body: {
-              title,
-              description,
-              image: response,
-            },
-          })
-          .then((res) => {
-            console.log(res);
-            setLoading(false);
-            setStep(3);
-            if (res.error) {
-              setError(true);
-            } else {
-              setError(false);
-            }
-          });
-      });
+      fbs.uploadToFirebaseStorage(files);
     } else {
-      api
-        .call(API_METHODS.POST, "/api/posts/", {
-          headers: {
-            authorization: user.token,
-            username: user.username,
-            userid: user.userid,
-          },
-          body: {
-            title,
-            description,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          setLoading(false);
-          setStep(3);
-          if (res.error) {
-            setError(true);
-          } else {
-            setError(false);
-          }
-        });
+      storage.triggerPendingPost();
     }
   };
 

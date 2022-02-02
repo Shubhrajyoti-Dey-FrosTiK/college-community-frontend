@@ -1,0 +1,29 @@
+.Home {
+  display: flex;
+}
+
+.Content {
+  height: calc(100vh - 65px);
+  overflow-y: scroll;
+  padding-top: 65px;
+}
+
+@media screen and (max-width: 900px) {
+  .SideNav {
+    display: none;
+  }
+
+  .Content {
+    width: 100vw;
+    height: calc(100vh - 120px);
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .SideNav {
+    display: block;
+  }
+  .Content {
+    width: calc(100vw - 250px);
+  }
+}
