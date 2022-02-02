@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slices/User";
+import postReducer from "./slices/Post";
 import {
   persistStore,
   persistReducer,
@@ -17,6 +18,8 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  whiteList: ["user"],
+  blacklist: ["post"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
