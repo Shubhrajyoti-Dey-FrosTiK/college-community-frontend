@@ -24,7 +24,6 @@ export class StorageService {
   };
 
   getUserData = () => {
-    console.log(this.user);
     return this.user;
   };
 

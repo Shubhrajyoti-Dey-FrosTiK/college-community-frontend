@@ -3,11 +3,17 @@ import ShowMoreText from "react-show-more-text";
 import styles from "./Card.module.css";
 import User from "../../assets/img/default-user.png";
 import ImageViewer from "../ImageViewer/ImageViewer";
+import { Link } from "react-router-dom";
+import { NavigatorService } from "../../services/navigator/navigator.service";
 
 function Card({ post }) {
   const [count, setCount] = useState(500);
+  const ns = new NavigatorService();
+  const handleClick = () => {
+    ns.post(post._id);
+  };
   return (
-    <div className={styles.Card}>
+    <div className={styles.Card} onClick={handleClick}>
       <div className={styles.Heading}>
         <img
           src={post.userId.image || User}

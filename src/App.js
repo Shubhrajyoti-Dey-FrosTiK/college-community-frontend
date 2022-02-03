@@ -19,7 +19,7 @@ const Home = lazy(() => import("./pages/Home/Home"));
 export default function App() {
   const storage = new StorageService();
   const user = useSelector(selectUser);
-
+  console.log(user);
   return (
     <React.Fragment>
       <BrowserRouter>

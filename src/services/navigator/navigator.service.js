@@ -20,6 +20,11 @@ export class NavigatorService {
     this.print(url);
     this.navigate(url);
   };
+  post = (param = "") => {
+    const url = "/post/" + param;
+    this.print(url);
+    this.navigate(url);
+  };
   community = (param = "") => {
     const url = "/community" + param;
     this.print(url);

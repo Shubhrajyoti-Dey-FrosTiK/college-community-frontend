@@ -16,7 +16,6 @@ export class APIService {
 
   async call(method, url, apiData = { headers: {}, body: {} }) {
     const user = this.storage.getUserData();
-    console.log(user);
     apiData.headers.authorization = user.token;
     apiData.headers.userid = user.userid;
     apiData.headers.username = user.username;
@@ -33,12 +32,14 @@ export class APIService {
       return response.data;
     } else if (method === API_METHODS.PUT) {
       const response = await Promise.resolve(
-        axios.put(URL, apiData.headers, apiData.body)
+        axios.put(URL, apiData.body, {
+          headers: apiData.headers,
+        })
       );
       return response.data;
     } else if (method === API_METHODS.DELETE) {
       const response = await Promise.resolve(
-        axios.delete(URL, apiData.headers)
+        axios.delete(URL, { headers: apiData.headers })
       );
       return response.data;
     } else {

@@ -235,6 +235,7 @@ export function BottomNav() {
               >
                 <img src={Friends} alt="Friends" style={{ height: "30px" }} />
               </div>
+
               <div
                 style={{
                   cursor: "pointer",
@@ -245,6 +246,16 @@ export function BottomNav() {
               >
                 <img src={Like} alt="like" style={{ height: "30px" }} />
               </div>
+              {/* <StyledFab color="primary" aria-label="add"> */}
+              <img
+                src={Add}
+                alt="Add"
+                style={{ height: "50px" }}
+                onClick={() => {
+                  storage.createPost();
+                }}
+              />
+              {/* </StyledFab> */}
               <div
                 style={{
                   cursor: "pointer",
@@ -254,7 +265,7 @@ export function BottomNav() {
                 <img
                   src={Notifications}
                   alt="Notifications"
-                  style={{ height: "30px", marginLeft: "90px" }}
+                  style={{ height: "30px" }}
                 />
               </div>
               <div
@@ -267,16 +278,6 @@ export function BottomNav() {
               >
                 <img src={Activity} alt="Activity" style={{ height: "30px" }} />
               </div>
-              <StyledFab color="primary" aria-label="add">
-                <img
-                  src={Add}
-                  alt="Add"
-                  style={{ height: "80px" }}
-                  onClick={() => {
-                    storage.createPost();
-                  }}
-                />
-              </StyledFab>
             </Toolbar>
           </ThemeProvider>
         </AppBar>
