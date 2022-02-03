@@ -34,9 +34,8 @@ export default function ImageViewer(props) {
         >
           {props.images &&
             props.images.map((image, index) => {
-              console.log(image);
               return (
-                <SwiperSlide>
+                <SwiperSlide key={`PostImg_${index}`}>
                   <img src={image} alt="Pic" />
                 </SwiperSlide>
               );
