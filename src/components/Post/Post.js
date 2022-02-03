@@ -257,7 +257,7 @@ function Post({ post, liked, id, comments }) {
                 key={`Comment_${index}`}
               >
                 <img
-                  src={post.userId.image || User}
+                  src={comment.userId.image || User}
                   alt="user"
                   style={{ height: "40px", marginRight: "10px" }}
                 />
@@ -270,7 +270,7 @@ function Post({ post, liked, id, comments }) {
                     width: "100%",
                   }}
                 >
-                  <h2>{post.userId.username}</h2>
+                  <h2>{comment.userId.username}</h2>
                   <h3>
                     <ShowMoreText
                       /* Default options */
