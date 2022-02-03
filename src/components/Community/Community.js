@@ -52,7 +52,7 @@ function SkeletonComponent() {
 
 export default function Community() {
   const api = new APIService();
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -68,22 +68,22 @@ export default function Community() {
       setLoading(false);
     });
   }, []);
+
   return (
     <React.Fragment>
       {loading && <SpinnerV2 />}
       {error && <div>Some Error Happened</div>}
-      {posts && posts.length > 0 ? (
+      {posts &&
+        posts.length > 0 &&
         posts.map((post, index) => {
           return (
             <React.Fragment key={`POST_${post._id}`}>
               <Card post={post} />
             </React.Fragment>
           );
-        })
-      ) : (
-        <h1>There are no posts available now</h1>
-      )}
-      <div style={{ height: "50px" }}></div>
+        })}{" "}
+      {posts && posts.length === 0 && <h1>There are no posts available now</h1>}
+      <div style={{ height: "100px" }}></div>
     </React.Fragment>
   );
 }
