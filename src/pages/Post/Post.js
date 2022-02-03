@@ -78,7 +78,12 @@ function Post() {
         <SpinnerV2 />
       ) : (
         <Suspense fallback={<SpinnerV2 />}>
-          <PostComponent post={post} liked={liked} id={activityId} />
+          <PostComponent
+            post={post}
+            liked={liked}
+            id={activityId}
+            comments={comments}
+          />
         </Suspense>
       )}
     </React.Fragment>

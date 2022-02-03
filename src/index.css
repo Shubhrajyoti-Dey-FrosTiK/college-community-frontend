@@ -36,3 +36,7 @@ h5 {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
 }
+
+#sharethis {
+  z-index: 2 !important;
+}
