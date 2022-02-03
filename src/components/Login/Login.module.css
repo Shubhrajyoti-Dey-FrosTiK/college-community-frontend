@@ -8,7 +8,7 @@
   min-height: 100vh;
   box-sizing: border-box;
   background-color: #1f2833;
-  color: whitesmoke;
+  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,7 +63,7 @@
   flex-direction: column; */
   text-align: center;
   align-items: center;
-  color: whitesmoke;
+  color: white;
   justify-content: center;
 }
 

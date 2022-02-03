@@ -1,0 +1,17 @@
+.Activity {
+  padding: 10px;
+  width: 90%;
+  cursor: pointer;
+  margin-left: 5vw;
+  text-align: left;
+  border-bottom: 2px solid;
+  border-image-slice: 1;
+  align-items: center;
+  border-width: 5px;
+  display: flex;
+  border-image-source: linear-gradient(
+    to right,
+    rgb(17, 143, 133),
+    rgba(17, 143, 133, 0)
+  );
+}

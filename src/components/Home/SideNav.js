@@ -63,10 +63,14 @@ function SideNav() {
               onClick={() => handleClick(option)}
               style={{
                 backgroundColor: `${
-                  option === page.page ? selectedBackgroundColor : ""
+                  option.toLowerCase() === page.page.toLowerCase()
+                    ? selectedBackgroundColor
+                    : ""
                 }`,
                 color: `${
-                  option === page.page ? "white" : selectedBackgroundColor
+                  option.toLowerCase() === page.page.toLowerCase()
+                    ? "white"
+                    : selectedBackgroundColor
                 }`,
               }}
             >

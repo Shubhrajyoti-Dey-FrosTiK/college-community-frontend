@@ -12,6 +12,10 @@ import styles from "./Home.module.css";
 
 const SideNav = React.lazy(() => import("../../components/Home/SideNav"));
 const Community = React.lazy(() => import("../Community/Community"));
+const Activity = React.lazy(() => import("../Activity/Activity"));
+const Notifications = React.lazy(() =>
+  import("../Notifications/Notifications")
+);
 
 function Home() {
   const ns = new NavigatorService();
@@ -38,11 +42,19 @@ function Home() {
             />
             <Route
               path="/activity"
-              element={<h1 style={{ fontSize: "100px" }}>Activity</h1>}
+              element={
+                <Suspense fallback={<SpinnerV2 />}>
+                  <Activity />
+                </Suspense>
+              }
             />
             <Route
               path="/notifications"
-              element={<h1 style={{ fontSize: "100px" }}>Notifications</h1>}
+              element={
+                <Suspense fallback={<SpinnerV2 />}>
+                  <Notifications />
+                </Suspense>
+              }
             />
             <Route
               path="*"
