@@ -98,7 +98,13 @@ export function TopNav() {
                   variant="h6"
                   noWrap
                   component="div"
-                  sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+                  sx={{
+                    mr: 2,
+                    display: { xs: "none", md: "flex", cursor: "pointer" },
+                  }}
+                  onClick={() => {
+                    ns.home();
+                  }}
                 >
                   <img src={BigLogo} alt="logo" style={{ width: "100px" }} />
                 </Typography>
@@ -106,7 +112,13 @@ export function TopNav() {
                   variant="h6"
                   noWrap
                   component="div"
-                  sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+                  sx={{
+                    flexGrow: 1,
+                    display: { xs: "flex", md: "none", cursor: "pointer" },
+                  }}
+                  onClick={() => {
+                    ns.home();
+                  }}
                 >
                   <img src={SmallLogo} alt="logo" style={{ height: "40px" }} />
                 </Typography>
@@ -250,7 +262,7 @@ export function BottomNav() {
               <img
                 src={Add}
                 alt="Add"
-                style={{ height: "50px" }}
+                style={{ height: "50px", cursor: "pointer" }}
                 onClick={() => {
                   storage.createPost();
                 }}

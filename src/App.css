@@ -2,28 +2,28 @@
   text-align: center;
 }
 
-@media screen and (max-width: 1024px) {
-  html {
-    overflow: scroll;
-    overflow-x: hidden;
-  }
-  html::-webkit-scrollbar {
-    width: 0; /* Remove scrollbar space */
-    background: transparent; /* Optional: just make scrollbar invisible */
-  }
-  /* Optional: show position indicator in red */
-  html::-webkit-scrollbar-thumb {
-    background: #ff0000;
-  }
-
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .scrollbar-hidden::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Hide scrollbar for IE, Edge add Firefox */
-  .scrollbar-hidden {
-    -ms-overflow-style: none;
-    scrollbar-width: none; /* Firefox */
-  }
+/* @media screen and (max-width: 1024px) { */
+html {
+  overflow: scroll;
+  overflow-x: hidden;
 }
+html::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+html::-webkit-scrollbar-thumb {
+  background: #ff0000;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge add Firefox */
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none; /* Firefox */
+}
+/* } */
