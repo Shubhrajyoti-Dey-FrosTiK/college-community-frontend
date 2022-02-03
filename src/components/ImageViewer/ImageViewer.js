@@ -24,6 +24,8 @@ export default function ImageViewer(props) {
             "--swiper-navigation-color": "#fff",
             "--swiper-pagination-color": "#fff",
             borderRadius: "10px",
+            height: `${props.height || ""}`,
+            width: `${props.width || ""}`,
           }}
           // loop={true}
           spaceBetween={10}

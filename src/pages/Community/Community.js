@@ -28,7 +28,7 @@ function Community() {
     <React.Fragment>
       <Routes>
         <Route
-          path="/post/*"
+          path="/post/:id"
           element={
             <Suspense fallback={<Spinner />}>
               <PostComponent />
