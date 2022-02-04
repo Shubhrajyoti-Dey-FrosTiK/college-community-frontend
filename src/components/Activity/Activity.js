@@ -9,11 +9,11 @@ import User from "../../assets/img/default-user.png";
 import { NavigatorService } from "../../services/navigator/navigator.service";
 
 function Activity({ activity }) {
+  console.log(activity);
   const ns = new NavigatorService();
   const [action, setAction] = useState("");
   const [user, setUser] = useState({});
   const storage = new StorageService();
-
   useEffect(() => {
     const currentUser = storage.getUserData();
     setUser(currentUser);
@@ -35,6 +35,9 @@ function Activity({ activity }) {
     if (activity.type === ACTIVITY_CONSTANTS.FOLLOW_USER) {
       setAction("You followed the user ");
     }
+    if (activity.type === ACTIVITY_CONSTANTS.UNFOLLOW_USER) {
+      setAction("You unfollowed the user ");
+    }
     if (activity.type === ACTIVITY_CONSTANTS.REMOVE_FOLLOW_USER) {
       setAction("You removed your follow from the user ");
     }
@@ -46,35 +49,42 @@ function Activity({ activity }) {
     }
   }, []);
 
+  const handleClick = () => {
+    if (
+      activity.type === ACTIVITY_CONSTANTS.FOLLOW_USER ||
+      activity.type === ACTIVITY_CONSTANTS.UNFOLLOW_USER
+    ) {
+      ns.user(activity.creatorId.username);
+    } else {
+      ns.post(activity.postId._id);
+    }
+  };
+
   return (
-    <div
-      className={styles.Activity}
-      onClick={() => ns.post(activity.postId._id)}
-    >
-      <img
-        src={
-          activity.postId.image
-            ? activity.postId.image.length > 0
-              ? activity.postId.image[0]
-              : User
-            : User
-        }
-        alt="user"
-        style={{
-          height: "40px",
-          width: "40px",
-          marginRight: "20px",
-          borderRadius: "50%",
-        }}
-      />
+    <div className={styles.Activity} onClick={handleClick}>
+      {(activity.type !== ACTIVITY_CONSTANTS.FOLLOW_USER ||
+        activity.type !== ACTIVITY_CONSTANTS.UNFOLLOW_USER) && (
+        <img
+          src={
+            // activity.postId.image
+            //   ? activity.postId.image.length > 0
+            //     ? activity.postId.image[0]
+            //     : User
+            User
+          }
+          alt="user"
+          style={{
+            height: "40px",
+            width: "40px",
+            marginRight: "20px",
+            borderRadius: "50%",
+          }}
+        />
+      )}
       <p>
         {activity.type === ACTIVITY_CONSTANTS.CREATE_POST
           ? `${action}`
-          : `${action} ${
-              activity.postId.username === user.username
-                ? "you"
-                : `${activity.postId.username}`
-            }`}
+          : `${action} ${activity.creatorId.username}`}
       </p>
     </div>
   );

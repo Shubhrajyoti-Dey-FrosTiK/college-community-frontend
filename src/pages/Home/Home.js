@@ -16,6 +16,8 @@ const Activity = React.lazy(() => import("../Activity/Activity"));
 const Notifications = React.lazy(() =>
   import("../Notifications/Notifications")
 );
+const User = React.lazy(() => import("../User/User"));
+const Friends = React.lazy(() => import("../../pages/Friends/Friends"));
 
 function Home() {
   const ns = new NavigatorService();
@@ -38,7 +40,11 @@ function Home() {
             />
             <Route
               path="/friends"
-              element={<h1 style={{ fontSize: "100px" }}>Friends</h1>}
+              element={
+                <Suspense fallback={<SpinnerV2 />}>
+                  <Friends />
+                </Suspense>
+              }
             />
             <Route
               path="/activity"
@@ -53,6 +59,14 @@ function Home() {
               element={
                 <Suspense fallback={<SpinnerV2 />}>
                   <Notifications />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/user/:username"
+              element={
+                <Suspense fallback={<SpinnerV2 />}>
+                  <User />
                 </Suspense>
               }
             />

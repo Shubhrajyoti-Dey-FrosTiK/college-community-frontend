@@ -50,7 +50,7 @@ function SkeletonComponent() {
   );
 }
 
-export default function Community() {
+export default function Community({ postData }) {
   const api = new APIService();
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -58,15 +58,21 @@ export default function Community() {
 
   useEffect(() => {
     setLoading(true);
-    Promise.resolve(api.call(API_METHODS.GET, "/api/posts")).then((res) => {
-      console.log(res);
-      if (res.error) {
-        setError(true);
-      } else {
-        setPosts(res.data);
-      }
+    if (!postData) {
+      Promise.resolve(api.call(API_METHODS.GET, "/api/posts")).then((res) => {
+        console.log(res);
+        if (res.error) {
+          setError(true);
+        } else {
+          setPosts(res.data);
+        }
+        setLoading(false);
+      });
+    } else {
+      setPosts(postData);
       setLoading(false);
-    });
+      setError(false);
+    }
   }, []);
 
   return (
