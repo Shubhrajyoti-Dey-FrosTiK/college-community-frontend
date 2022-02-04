@@ -47,6 +47,7 @@ export function TopNav() {
   const post = useSelector(selectPost);
   const ns = new NavigatorService();
   const storage = new StorageService();
+  const user = storage.getUserData();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const menuTheme = createTheme({
     palette: {
@@ -173,7 +174,13 @@ export function TopNav() {
                       open={Boolean(anchorElUser)}
                       onClose={handleCloseUserMenu}
                     >
-                      <MenuItem key={"PROFILE"} onClick={handleCloseUserMenu}>
+                      <MenuItem
+                        key={"PROFILE"}
+                        onClick={() => {
+                          handleCloseUserMenu();
+                          ns.user(user.username);
+                        }}
+                      >
                         <Typography textAlign="center">Profile</Typography>
                       </MenuItem>
                       <MenuItem key={"ACCOUNT"} onClick={handleCloseUserMenu}>

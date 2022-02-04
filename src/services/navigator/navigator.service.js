@@ -45,6 +45,11 @@ export class NavigatorService {
     this.print(url);
     this.navigate(url);
   };
+  user = (param = "") => {
+    const url = "/user/" + param;
+    this.print(url);
+    this.navigate(url);
+  };
   back = () => {
     this.navigate(-1);
   };

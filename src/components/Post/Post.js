@@ -29,8 +29,8 @@ import {
 } from "react-share";
 
 function Post({ post, liked, id, comments }) {
+  console.log(post);
   const url = window.location.href;
-  console.log(url);
   const api = new APIService();
   const [like, setLike] = useState(liked);
   const [likeCount, setLikeCount] = useState(post.likeCount);

@@ -14,11 +14,15 @@ export class APIService {
   //   },
   // };
 
-  async call(method, url, apiData = { headers: {}, body: {} }) {
+  async call(method, url, data = { headers: {}, body: {} }) {
     const user = this.storage.getUserData();
+    // apiData.headers.authorization = user.token;
+    // apiData.headers.userid = user.userid;
+    // apiData.headers.username = user.username;
+    let apiData = data;
     apiData.headers.authorization = user.token;
-    apiData.headers.userid = user.userid;
-    apiData.headers.username = user.username;
+    apiData.headers.userid = apiData.headers.userid || user.userid;
+    apiData.headers.username = apiData.headers.username || user.username;
     console.log("API Data: ", apiData);
     const URL = `${BASE_URL}${url}`;
     console.log(`${method}: ${URL}`);

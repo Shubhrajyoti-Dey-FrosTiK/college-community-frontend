@@ -12,7 +12,7 @@ function Post() {
   const { id } = useParams();
   const api = new APIService();
   const storage = new StorageService();
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState(null);
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState({});
   const [loadingPost, setLoadingPost] = useState(true);
@@ -23,13 +23,17 @@ function Post() {
 
   useEffect(() => {
     storage.changePage(PAGES.COMMUNITY);
+    console.log(id);
     api
       .call(API_METHODS.GET, "/api/posts/id", {
         headers: { postid: id },
       })
       .then((res) => {
         if (res.data) {
+          console.log(res.data);
           setPost(res.data);
+        } else {
+          setError(true);
         }
         setLoadingPost(false);
       });
@@ -50,41 +54,45 @@ function Post() {
         headers: { postid: id },
       })
       .then((res) => {
-        console.log(res);
         if (res.data) {
           setComments(res.data);
+        } else {
+          setError(true);
         }
         setLoadingComments(false);
       });
   }, []);
 
   useEffect(() => {
-    if (
-      Object.keys(post).length === 0 &&
-      !loadingComments &&
-      !loadingLike &&
-      !loadingPost
-    ) {
+    if (!post && !loadingComments && !loadingLike && !loadingPost) {
       // if (post == {}) {
       setError(true);
       console.log("Error");
     }
+    console.log(post);
   });
 
   return (
     <React.Fragment>
-      {error && <div>Some Error Happened</div>}
-      {loadingPost || loadingLike || loadingComments ? (
-        <SpinnerV2 />
-      ) : (
-        <Suspense fallback={<SpinnerV2 />}>
-          <PostComponent
-            post={post}
-            liked={liked}
-            id={activityId}
-            comments={comments}
-          />
-        </Suspense>
+      {error && (
+        <div>
+          <h2 style={{ textAlign: "center", marginTop: "30px" }}>
+            Post Not Found{" "}
+          </h2>
+        </div>
+      )}
+      {loadingPost || loadingLike || (loadingComments && <SpinnerV2 />)}
+      {!loadingPost && !loadingLike && !loadingComments && !error && (
+        <React.Fragment>
+          <Suspense fallback={<SpinnerV2 />}>
+            <PostComponent
+              post={post}
+              liked={liked}
+              id={activityId}
+              comments={comments}
+            />
+          </Suspense>
+        </React.Fragment>
       )}
     </React.Fragment>
   );
