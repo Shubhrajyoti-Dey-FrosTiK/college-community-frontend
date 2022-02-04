@@ -141,11 +141,13 @@ function Register() {
           console.log(res);
           setLoading(false);
           if (res.data) {
-            storage.storUserData({
-              username: res.data.username,
-              userid: res.data._id,
+            console.log(res);
+            const newUser = {
+              username: res.data.user.username,
+              userid: res.data.user._id,
               token: res.token,
-            });
+            };
+            storage.storUserData(newUser);
             ns.home();
           }
           setServerResponse(res);
