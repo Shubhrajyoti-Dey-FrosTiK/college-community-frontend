@@ -49,6 +49,7 @@ export function TopNav() {
   const storage = new StorageService();
   const user = storage.getUserData();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [search, setSearch] = React.useState("");
   const menuTheme = createTheme({
     palette: {
       action: {
@@ -137,6 +138,10 @@ export function TopNav() {
                   >
                     <InputBase
                       sx={{ ml: 1, flex: 1 }}
+                      value={search}
+                      onChange={(e) => {
+                        setSearch(e.target.value);
+                      }}
                       placeholder="Search"
                       inputProps={{ "aria-label": "search google maps" }}
                     />
@@ -144,6 +149,9 @@ export function TopNav() {
                       type="submit"
                       sx={{ p: "10px" }}
                       aria-label="search"
+                      onClick={() => {
+                        ns.search(search);
+                      }}
                     >
                       <SearchIcon />
                     </IconButton>
