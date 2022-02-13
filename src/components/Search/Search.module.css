@@ -1,0 +1,33 @@
+.Search {
+  padding: 10px;
+  width: 90%;
+  cursor: pointer;
+  margin-left: 5vw;
+  text-align: left;
+  border-bottom: 2px solid;
+  border-image-slice: 1;
+  /* align-items: center; */
+  border-width: 5px;
+  display: flex;
+  border-image-source: linear-gradient(
+    to right,
+    rgb(17, 143, 133),
+    rgba(17, 143, 133, 0)
+  );
+}
+
+.Content {
+  display: flex;
+  padding-top: 30px;
+  padding-left: 5vw;
+  /* justify-content: center; */
+  flex-wrap: wrap;
+  gap: 4vw;
+}
+
+@media screen and (max-width: 900px) {
+  .Content {
+    justify-content: center;
+    padding-top: 0px;
+  }
+}

@@ -50,6 +50,11 @@ export class NavigatorService {
     this.print(url);
     this.navigate(url);
   };
+  search = (param = "") => {
+    const url = "/search/" + param;
+    this.print(url);
+    this.navigate(url);
+  };
   back = () => {
     this.navigate(-1);
   };
