@@ -36,26 +36,26 @@ function User() {
         console.log(res);
         if (res.data) {
           setUser(res.data);
+          api
+            .call(API_METHODS.GET, "/api/posts/user", {
+              headers: {
+                username: username,
+                userid: res.data._id,
+              },
+            })
+            .then((res) => {
+              console.log(res);
+              if (res.data) {
+                setPosts(res.data);
+              } else {
+                setError("Cant find posts");
+              }
+              setLoadingPosts(false);
+            });
         } else {
           setError("User not found");
         }
         setLoadingUser(false);
-      });
-
-    api
-      .call(API_METHODS.GET, "/api/posts/user", {
-        headers: {
-          username: username,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.data) {
-          setPosts(res.data);
-        } else {
-          setError("Cant find posts");
-        }
-        setLoadingPosts(false);
       });
   }, [username]);
 
